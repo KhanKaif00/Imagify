@@ -5,11 +5,15 @@ export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
 
-    const [user, setUser] = useState(true)  //later we we will get the user from the backend
+    const [user, setUser] = useState(null)  //later we we will get the user from the backend
+    const [showLogin, setShowLogin] = useState(false)  
+
 
     const value = {
         user,
-        setUser
+        setUser,
+        showLogin,
+        setShowLogin,
     }
     return (
         <AppContext.Provider value={value}>
