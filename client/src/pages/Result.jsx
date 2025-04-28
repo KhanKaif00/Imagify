@@ -1,18 +1,34 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { assets } from "../assets/assets"
 import { motion } from "motion/react"
+import { AppContext } from "../context/AppContext"
 
 
 const Result = () => {
 
 
   const [image, setImage] = useState(assets.sample_img_1)
-  const [isImageLoaded, setIsImageLoaded] = useState(true)
+  const [isImageLoaded, setIsImageLoaded] = useState(false)
   const [loading, setLoading] = useState(true)
   const [inputValue, setInputValue] = useState('')
 
-  const onSubmitHandler = async(e) => {
+  const {generateImage,credit} = useContext(AppContext)
 
+
+
+  const onSubmitHandler = async(e) => {
+    e.preventDefault()
+    setLoading(true)
+
+    if(inputValue){
+      const image = await generateImage(inputValue)
+       if(image){
+        setImage(image)
+        setIsImageLoaded(true)
+       }
+    }
+
+         setLoading(false)
   }
     
 
@@ -41,7 +57,7 @@ const Result = () => {
       placeholder="Describe what yoou whant to genearate" 
       className="flex-1 bg-transparent outline-none ml-8 max-sm:w-20 placeholder-color"
       />
-      <button type="submit" className="bg-zinc-900 px-10 sm:px-16 py-3 rounded-full" >Generate</button>
+      <button  type="submit" className="bg-zinc-900 px-10 sm:px-16 py-3 rounded-full" >Generate</button>
     </div>
     }
 
